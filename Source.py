@@ -28,7 +28,7 @@ class BotHandler:
         if len(result) > 0:
             last_update = result[-1]
         else:
-            last_update = result[len(result)]
+            last_update = None
 
         return last_update
 
