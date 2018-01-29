@@ -1,1 +1,1 @@
-worker: python Source.py
+web: python Source.py
