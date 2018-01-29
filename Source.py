@@ -52,7 +52,7 @@ def main():
 
         if last_chat_text in greetings:
             greet_bot.send_message(last_chat_id, 'Приветствую, {}!'.format(last_chat_name))
-            today += 1
+        #    today += 1
         new_offset = last_update_id + 1
 
 
