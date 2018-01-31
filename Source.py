@@ -34,8 +34,8 @@ class BotHandler:
 
 greet_bot = BotHandler(token)
 greetings = ('здравствуй', 'дарова', 'привет')
-no_ = ('нет', 'Нет', 'нЕт', 'неТ', 'НеТ', 'НЕт', 'нЕТ', 'НЕТ', 'неь', 'Неь', 'НЕЬ', 'HET', 'net', 'NET', 'No', 'no', 'NO')
-no = []
+no = ('нет', 'Нет', 'нЕт', 'неТ', 'НеТ', 'НЕт', 'нЕТ', 'НЕТ', 'неь', 'Неь', 'НЕЬ', 'HET', 'net', 'NET', 'No', 'no', 'NO')
+yes = []
 now = datetime.datetime.now()
 
 
@@ -64,10 +64,10 @@ def main():
             greet_bot.send_message(last_chat_id, 'Жду...')
             new_offset = last_update_id + 1
             continue
-        if last_chat_text in no_:
-            greet_bot.send_message(last_chat_id, 'Пидора ответ')
         if last_chat_text in no:
             greet_bot.send_message(last_chat_id, 'Нет')
+        if last_chat_text in yes:
+            greet_bot.send_message(last_chat_id, 'Да')
         #    today += 1
         new_offset = last_update_id + 1
 
