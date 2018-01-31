@@ -66,6 +66,8 @@ def main():
             continue
         if last_chat_text in no_:
             greet_bot.send_message(last_chat_id, 'Пидора ответ')
+        if last_chat_text in no:
+            greet_bot.send_message(last_chat_id, 'Нет')
         #    today += 1
         new_offset = last_update_id + 1
 
