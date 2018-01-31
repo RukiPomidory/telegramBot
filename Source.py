@@ -57,10 +57,12 @@ def main():
             no.append((last_chat_text))
             greet_bot.send_message(last_chat_id, 'Запомнил: "{}"'.format(last_chat_text))
             append = False
+            sleep(1)
             continue
         if last_chat_text == '/append':
             append = True
             greet_bot.send_message(last_chat_id, 'Жду...')
+            sleep(1)
             continue
         if last_chat_text in no_:
             greet_bot.send_message(last_chat_id, 'Пидора ответ')
