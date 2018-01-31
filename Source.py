@@ -54,7 +54,7 @@ def main():
         last_chat_id = last_update['message']['chat']['id']
         #last_chat_name = last_update['message']['chat']['first_name']
         if append:
-            no.append((last_chat_text))
+            yes.append((last_chat_text))
             greet_bot.send_message(last_chat_id, 'Запомнил: "{}"'.format(last_chat_text))
             append = False
             new_offset = last_update_id + 1
