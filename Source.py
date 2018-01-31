@@ -34,7 +34,8 @@ class BotHandler:
 
 greet_bot = BotHandler(token)
 greetings = ('здравствуй', 'дарова', 'привет')
-no = ('не', 'НЕ', 'Не', 'нЕ', 'нет', 'Нет', 'нЕт', 'неТ', 'НеТ', 'НЕт', 'нЕТ', 'НЕТ', 'неь', 'Неь', 'НЕЬ', 'HET', 'net', 'NET')
+no_ = ('нет', 'Нет', 'нЕт', 'неТ', 'НеТ', 'НЕт', 'нЕТ', 'НЕТ', 'неь', 'Неь', 'НЕЬ', 'HET', 'net', 'NET', 'No', 'no', 'NO')
+no = []
 now = datetime.datetime.now()
 
 
@@ -42,7 +43,7 @@ def main():
     new_offset = None
     today = now.day
     hour = now.hour
-
+    append = False
     while True:
         greet_bot.get_updates(new_offset)
         last_update = greet_bot.get_last_update()
@@ -52,8 +53,16 @@ def main():
         last_chat_text = last_update['message']['text']
         last_chat_id = last_update['message']['chat']['id']
         #last_chat_name = last_update['message']['chat']['first_name']
-
-        if last_chat_text in no:
+        if append:
+            no.append((last_chat_text))
+            greet_bot.send_message(last_chat_id, 'Запомнил: "{}"'.format(last_chat_text))
+            append = False
+            continue
+        if last_chat_text == '/append':
+            append = True
+            greet_bot.send_message(last_chat_id, 'Жду...')
+            continue
+        if last_chat_text in no_:
             greet_bot.send_message(last_chat_id, 'Пидора ответ')
         #    today += 1
         new_offset = last_update_id + 1
