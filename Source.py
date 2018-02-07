@@ -13,10 +13,15 @@ def send_no(message):
 @bot.message_handler(commands=['button'])
 def test(message):
     markup = types.InlineKeyboardMarkup()
-    url_button = types.InlineKeyboardButton(text="Перейти на Яндекс", url="https://ya.ru")
-    markup.add(url_button)
-    bot.send_message(message.chat.id, 'TEST', reply_markup=markup)
+    first_button = types.InlineKeyboardButton(text="это", callback_data="first")
+    second_button = types.InlineKeyboardButton(text="одно из двух", callback_data="second")
+    markup.add(first_button, second_button)
+    bot.send_message(message.chat.id, 'Либо это, либо одно из двух', reply_markup=markup)
 
+
+@bot.callback_query_handler(func=lambda call: True)
+def callback(call):
+    bot.send_message(call.message.chat.id, call.data)
 
 if __name__ == '__main__':
     bot.polling()
