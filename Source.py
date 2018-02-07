@@ -12,7 +12,7 @@ def send_no(message):
 
 @bot.message_handler(commands=['button'])
 def test(message):
-    markup = types.InlineKeyBoardMarkup()
+    markup = types.InlineKeyboardMarkup()
     url_button = types.InlineKeyboardButton(text="Перейти на Яндекс", url="https://ya.ru")
     markup.add(url_button)
     bot.send_message(message.chat.id, 'TEST', reply_markup=markup)
