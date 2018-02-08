@@ -9,6 +9,7 @@ is_id = False
 answers = []
 question = ""
 vote_results = {}
+markup = types.InlineKeyboardMarkup()
 
 
 @bot.message_handler(commands=['show_id'])
@@ -91,11 +92,11 @@ def callback(call):
     res = question
     for item in table:
         res += '{} - \t({} штук)\n'.format(item, table[item])
-    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=res)
+    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=res, reply_markup=markup)
 
 
 def create_vote(chat_id, question, answers):
-    markup = types.InlineKeyboardMarkup()
+    global markup
     i = 0
     for answer in answers:
         markup.add(types.InlineKeyboardButton(text=answer, callback_data=str(i)))
