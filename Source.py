@@ -26,11 +26,13 @@ def start_vote(message):
 
 @bot.message_handler(commands=['stop'])
 def stop_vote(message):
+    global is_id
     if not is_answers or len(answers) == 0:
         bot.send_message(message.chat.id, 'Голосование остановлено')
         return
     bot.send_message(message.chat.id, 'Голосование сформировано!\nКуда отправить?')
     clear_flags()
+    is_id = True
 
 
 @bot.message_handler(func=lambda x: is_id, content_types='text')
