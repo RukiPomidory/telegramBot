@@ -26,7 +26,7 @@ def show_results(message):
         table[answers[int(vote_results[vr])]] += 1
     res = ''
     for item in table:
-        res += '{} - ({} штук)\n'.format(item, table[item])
+        res += '{} - \t({} штук)\n'.format(item, table[item])
     bot.send_message(message.chat.id, res)
 
 
@@ -81,9 +81,17 @@ def read_question(message):
 def callback(call):
     global vote_results
     vote_results[call.from_user.id] = call.data
-    #vote_results[call.message.message_id] = call.data
-    #bot.send_message(call.message.chat.id, call.from_user.id)
-    #bot.send_message(call.message.chat.id, answers[int(call.data)])
+
+    table = {}
+    for answer in answers:
+        table[answer] = 0
+    # -280095386
+    for vr in vote_results:
+        table[answers[int(vote_results[vr])]] += 1
+    res = question
+    for item in table:
+        res += '{} - \t({} штук)\n'.format(item, table[item])
+    bot.edit_message_text(call.message.chat.id, call.message.message_id, res)
 
 
 def create_vote(chat_id, question, answers):
