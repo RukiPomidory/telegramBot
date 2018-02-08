@@ -8,11 +8,20 @@ is_answers = False
 is_id = False
 answers = []
 question = ""
+vote_results = {}
 
 
 @bot.message_handler(commands=['show_id'])
 def show_id(message):
     bot.send_message(message.chat.id, message.chat.id)
+
+
+@bot.message_handler(commands=['show_results'])
+def show_results(message):
+    res = ''
+    for i in vote_results:
+        res += answers[vote_results[i]] + '\n'
+    bot.send_message(message.chat.id, res)
 
 
 @bot.message_handler(commands=['vote'])
@@ -64,12 +73,12 @@ def read_question(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
-    bot.send_message(call.message.chat.id, call.data)
+    vote_results[call.message.user.id] = call.data
 
 
 def create_vote(chat_id, question, answers):
     markup = types.InlineKeyboardMarkup()
-    i = 1
+    i = 0
     for answer in answers:
         markup.add(types.InlineKeyboardButton(text=answer, callback_data=str(i)))
         i += 1
