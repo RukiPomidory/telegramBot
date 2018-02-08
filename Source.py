@@ -20,7 +20,7 @@ def show_id(message):
 def show_results(message):
     res = ''
     for i in vote_results:
-        res += answers[int(vote_results[i])] + '\n'
+        res.__add__(answers[int(vote_results[i])] + ' - {}%\n'.format(count(vote_results[i], vote_results)*100/len(vote_results)))
     bot.send_message(message.chat.id, res)
 
 
@@ -92,6 +92,14 @@ def clear_flags():
     is_question = False
     is_answers = False
     is_id = False
+
+
+def count(value, dict):
+    i = 0
+    for d in dict:
+        if dict[d] == value:
+            i += 1
+    return i
 
 
 if __name__ == '__main__':
