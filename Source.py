@@ -23,6 +23,7 @@ def show_results(message):
         result = vote_results[i] + '\n'
         res += result
     bot.send_message(message.chat.id, res)
+    bot.send_message(message.chat.id, len(vote_results))
 
 
 @bot.message_handler(commands=['vote'])
