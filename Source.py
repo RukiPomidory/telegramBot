@@ -38,10 +38,10 @@ def stop_vote(message):
 @bot.message_handler(func=lambda x: is_id, content_types='text')
 def read_id(message):
     result = 'Голосование опубликовано'
-    try:
-        create_vote(message.text, question, answers)
-    except:
-        result = 'Произошла ошибка :/'
+    #try:
+    create_vote(message.text, question, answers)
+    #except:
+    #result = 'Произошла ошибка :/'
     bot.send_message(message.chat.id, result)
     clear_flags()
 
