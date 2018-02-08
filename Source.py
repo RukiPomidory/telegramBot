@@ -18,13 +18,15 @@ def show_id(message):
 
 @bot.message_handler(commands=['show_results'])
 def show_results(message):
-    res = ''
-    i = 0
+    table = {}
+    for answer in answers:
+        table[answer] = 0
     #-280095386
     for vr in vote_results:
-        result = '{} - ({} штук)\n'.format(answers[i], count(vote_results[vr], vote_results))
-        res += result
-        i += 1
+        table[vote_results[vr]] += 1
+    res = ''
+    for item in table:
+        res += '{} - ({} штук)'.format(item, table[item])
     bot.send_message(message.chat.id, res)
 
 
