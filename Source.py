@@ -23,7 +23,7 @@ def show_results(message):
         table[answer] = 0
     #-280095386
     for vr in vote_results:
-        table[vote_results[vr]] += 1
+        table[answers[int(vote_results[vr])]] += 1
     res = ''
     for item in table:
         res += '{} - ({} штук)'.format(item, table[item])
