@@ -10,13 +10,19 @@ def send_no(message):
     bot.reply_to(message, 'Нет')
 
 
-@bot.message_handler(commands=['button'])
-def test(message):
+@bot.message_handler(commands=['inline'])
+def testInline(message):
     markup = types.InlineKeyboardMarkup()
     first_button = types.InlineKeyboardButton(text="это", callback_data="first")
     second_button = types.InlineKeyboardButton(text="одно из двух", callback_data="second")
     markup.add(first_button, second_button)
     bot.send_message(message.chat.id, 'Либо это, либо одно из двух', reply_markup=markup)
+
+@bot.message_handler(commands=['keyboard'])
+def testKeyboard(message):
+    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+    markup.add('Да', 'Нет')
+    bot.send_message(message.chat.id, 'Как оно?', reply_markup=markup)
 
 
 @bot.callback_query_handler(func=lambda call: True)
