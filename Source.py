@@ -78,6 +78,7 @@ def callback(call):
     global vote_results
     vote_results[call.message.from_user.id] = call.data
     #vote_results[call.message.message_id] = call.data
+    bot.send_message(call.message.chat.id, call.message.from_user.id)
     bot.send_message(call.message.chat.id, answers[int(call.data)])
 
 
