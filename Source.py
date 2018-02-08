@@ -74,6 +74,8 @@ def read_question(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
     vote_results[call.message.user.id] = call.data
+    bot.send_message(call.message.chat.id, call.data)
+    bot.send_message(call.message.chat.id, answers[call.data])
 
 
 def create_vote(chat_id, question, answers):
