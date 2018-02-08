@@ -21,10 +21,9 @@ def show_results(message):
     res = ''
     #-280095386
     for i in vote_results:
-        result = '{} - {}%\n'.format(vote_results[i], count(vote_results[i], vote_results))
+        result = '{} - ({} штук)\n'.format(vote_results[i], count(vote_results[i], vote_results))
         res += result
     bot.send_message(message.chat.id, res)
-    bot.send_message(message.chat.id, len(vote_results))
 
 
 @bot.message_handler(commands=['vote'])
