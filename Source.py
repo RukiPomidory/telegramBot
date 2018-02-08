@@ -91,7 +91,7 @@ def callback(call):
         table[answers[int(vote_results[vr])]] += 1
     res = '{}\n'.format(question)
     for item in table:
-        res += '{} - \t({} штук)\n'.format(item, table[item])
+        res += '{} - \t({} голосов)\n'.format(item, table[item])
     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=res, reply_markup=markup)
 
 
