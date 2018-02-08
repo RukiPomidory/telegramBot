@@ -75,7 +75,7 @@ def read_question(message):
 def callback(call):
     vote_results[call.message.from_user.id] = call.data
     bot.send_message(call.message.chat.id, call.data)
-    bot.send_message(call.message.chat.id, answers[call.data])
+    bot.send_message(call.message.chat.id, answers[int(call.data)])
 
 
 def create_vote(chat_id, question, answers):
