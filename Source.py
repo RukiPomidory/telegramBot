@@ -7,7 +7,7 @@ is_question = False
 is_answers = False
 is_id = False
 answers = []
-question = ''
+question = ""
 
 
 @bot.message_handler(commands=['show_id'])
@@ -54,12 +54,12 @@ def read_answer(message):
 
 @bot.message_handler(func=lambda x: is_question, content_types='text')
 def read_question(message):
-     global question, is_answers, is_question, is_id
-     question = message.text
-     bot.send_message(message.chat.id, 'Вопрос записан!\nНачните вводить ответы, по окончании - /stop')
-     is_answers = True
-     is_question = False
-     is_id = False
+    global question, is_answers, is_question, is_id
+    question = message.text
+    bot.send_message(message.chat.id, 'Вопрос записан!\nНачните вводить ответы, по окончании - /stop')
+    is_answers = True
+    is_question = False
+    is_id = False
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -73,7 +73,7 @@ def create_vote(chat_id, question, *answers):
     for answer in answers:
         markup.add(types.InlineKeyboardButton(text=answer, callback_data=i))
         i += 1
-    bot.send_message(chat_id, question, reply_markup=markup)
+    bot.send_message(chat_id, 'question', reply_markup=markup)
 
 
 def clear_flags():
