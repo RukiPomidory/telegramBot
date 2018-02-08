@@ -71,9 +71,9 @@ def create_vote(chat_id, question, *answers):
     markup = types.InlineKeyboardMarkup()
     i = 1
     for answer in answers:
-        markup.add(types.InlineKeyboardButton(text=answer, callback_data=i))
+        markup.add(types.InlineKeyboardButton(text=answer, callback_data=str(i)))
         i += 1
-    bot.send_message(chat_id, 'question', reply_markup=markup)
+    bot.send_message(chat_id, question, reply_markup=markup)
 
 
 def clear_flags():
