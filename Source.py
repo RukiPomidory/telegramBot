@@ -88,10 +88,10 @@ def callback(call):
     # -280095386
     for vr in vote_results:
         table[answers[int(vote_results[vr])]] += 1
-    res = ''
+    res = question
     for item in table:
         res += '{} - \t({} штук)\n'.format(item, table[item])
-    bot.send_message(call.message.chat.id, res)
+    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=res)
 
 
 def create_vote(chat_id, question, answers):
