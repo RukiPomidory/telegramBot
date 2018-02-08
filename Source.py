@@ -69,8 +69,10 @@ def callback(call):
 
 def create_vote(chat_id, question, *answers):
     markup = types.InlineKeyboardMarkup()
+    i = 1
     for answer in answers:
-        markup.add(types.InlineKeyboardButton(text=answer))
+        markup.add(types.InlineKeyboardButton(text=answer, callback_data=i))
+        i += 1
     bot.send_message(chat_id, question, reply_markup=markup)
 
 
