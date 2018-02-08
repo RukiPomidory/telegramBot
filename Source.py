@@ -47,10 +47,10 @@ def stop_vote(message):
 @bot.message_handler(func=lambda x: is_id, content_types='text')
 def read_id(message):
     result = 'Голосование опубликовано'
-    #try:
-    create_vote(message.text, question, answers)
-    #except:
-    #result = 'Произошла ошибка :/'
+    try:
+        create_vote(message.text, question, answers)
+    except:
+        result = 'Произошла ошибка :/'
     bot.send_message(message.chat.id, result)
     clear_flags()
 
@@ -82,7 +82,7 @@ def create_vote(chat_id, question, answers):
     markup = types.InlineKeyboardMarkup()
     i = 0
     for answer in answers:
-        markup.add(types.InlineKeyboardButton(text=answer, callback_data=str(i)))
+        markup.add(types.InlineKeyboardButton(text=answer, callback_data=i))
         i += 1
     bot.send_message(chat_id, question, reply_markup=markup)
 
