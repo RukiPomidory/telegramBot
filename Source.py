@@ -3,31 +3,81 @@ import config
 from telebot import types
 
 bot = telebot.TeleBot(config.token)
+is_question = False
+is_answers = False
+is_id = False
+answers = []
+question = ''
 
 
-@bot.message_handler(func=lambda x: x.text == 'Нет', content_types='text')
-def send_no(message):
-    bot.reply_to(message, 'Нет')
+@bot.message_handler(commands=['show_id'])
+def show_id(message):
+    bot.send_message(message.chat.id, message.chat.id)
 
 
-@bot.message_handler(commands=['inline'])
-def testInline(message):
-    markup = types.InlineKeyboardMarkup()
-    first_button = types.InlineKeyboardButton(text="это", callback_data="first")
-    second_button = types.InlineKeyboardButton(text="одно из двух", callback_data="second")
-    markup.add(first_button, second_button)
-    bot.send_message(message.chat.id, 'Либо это, либо одно из двух', reply_markup=markup)
+@bot.message_handler(commands=['vote'])
+def start_vote(message):
+    global is_answers, is_question, is_id
+    is_answers = False
+    is_question = True
+    is_id = False
+    bot.send_message(message.chat.id, 'Начало голосования\nВведите вопрос:')
 
-@bot.message_handler(commands=['keyboard'])
-def testKeyboard(message):
-    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-    markup.add('Да', 'Нет')
-    bot.send_message(message.chat.id, 'Как оно?', reply_markup=markup)
+
+@bot.message_handler(commands=['stop'])
+def stop_vote(message):
+    if not is_answers or len(answers) == 0:
+        bot.send_message(message.chat.id, 'Голосование остановлено')
+        return
+    bot.send_message(message.chat.id, 'Голосование сформировано!\nКуда отправить?')
+    clear_flags()
+
+
+@bot.message_handler(func=lambda x: is_id, content_types='text')
+def read_id(message):
+    result = 'Голосование опубликовано'
+    try:
+        create_vote(message.text, question, answers)
+    except:
+        result = 'Произошла ошибка :/'
+    bot.send_message(message.chat.id, result)
+    clear_flags()
+
+
+@bot.message_handler(func=lambda x: is_answers, content_types='text')
+def read_answer(message):
+    global answers
+    answers.append(message.text)
+
+
+@bot.message_handler(func=lambda x: is_question, content_types='text')
+def read_question(message):
+     global question, is_answers, is_question, is_id
+     question = message.text
+     bot.send_message(message.chat.id, 'Вопрос записан!\nНачните вводить ответы, по окончании - /stop')
+     is_answers = True
+     is_question = False
+     is_id = False
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
     bot.send_message(call.message.chat.id, call.data)
+
+
+def create_vote(chat_id, question, *answers):
+    markup = types.InlineKeyboardMarkup()
+    for answer in answers:
+        markup.add(types.InlineKeyboardButton(text=answer))
+    bot.send_message(chat_id, question, reply_markup=markup)
+
+
+def clear_flags():
+    global is_question, is_answers, is_id
+    is_question = False
+    is_answers = False
+    is_id = False
+
 
 if __name__ == '__main__':
     bot.polling()
