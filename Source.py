@@ -20,7 +20,8 @@ def show_id(message):
 def show_results(message):
     res = ''
     for i in vote_results:
-        res.__add__(answers[int(vote_results[i])] + ' - {}%\n'.format(count(vote_results[i], vote_results)*100/len(vote_results)))
+        result = vote_results[i] + '\n'
+        res += result
     bot.send_message(message.chat.id, res)
 
 
@@ -73,6 +74,7 @@ def read_question(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
+    global vote_results
     vote_results[call.message.from_user.id] = call.data
     bot.send_message(call.message.chat.id, call.data)
     bot.send_message(call.message.chat.id, answers[int(call.data)])
