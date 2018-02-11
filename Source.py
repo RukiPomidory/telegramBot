@@ -33,10 +33,12 @@ def show_results(message):
 
 @bot.message_handler(commands=['vote'])
 def start_vote(message):
-    global is_answers, is_question, is_id
+    global is_answers, is_question, is_id, answers, vote_results
     is_answers = False
     is_question = True
     is_id = False
+    answers = []
+    vote_results = {}
     bot.send_message(message.chat.id, 'Начало голосования\nВведите вопрос:')
 
 
